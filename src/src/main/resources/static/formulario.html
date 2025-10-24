@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Registro de Vehículos</title>
+  <style>
+    /* Estilos generales */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; line-height: 1.6; }
+    .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; }
+    .header { background: linear-gradient(135deg, #2c3e50, #3498db); color: white; padding: 30px; text-align: center; }
+    .header h1 { font-size: 2.2em; margin-bottom: 10px; }
+    .header p { font-size: 1.1em; opacity: 0.9; }
+    .vehicle-form { padding: 30px; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; font-weight: bold; color: #2c3e50; }
+    input, select, textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px; transition: border-color 0.3s; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #3498db; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .form-actions { display: flex; gap: 15px; margin-top: 30px; }
+    .btn { padding: 12px 25px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s; flex: 1; }
+    .btn-primary { background: #3498db; color: white; }
+    .btn-primary:hover { background: #2980b9; transform: translateY(-2px); }
+    .btn-secondary { background: #95a5a6; color: white; }
+    .btn-secondary:hover { background: #7f8c8d; }
+    .results { padding: 30px; background: #f8f9fa; border-top: 3px solid #3498db; display: none; }
+    .results h2 { color: #27ae60; margin-bottom: 20px; text-align: center; }
+    .vehicle-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    .vehicle-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+    .info-item { padding: 8px 0; border-bottom: 1px solid #ecf0f1; }
+    .info-label { font-weight: bold; color: #2c3e50; }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } .form-actions { flex-direction: column; } .header h1 { font-size: 1.8em; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🚗 Registro de Vehículos</h1>
+      <p>Sistema de gestión y registro de vehículos</p>
+    </div>
+
+    <form id="vehicleForm" class="vehicle-form">
+      <h2>Información del Vehículo</h2>
+
+      <div class="form-group">
+        <label for="placa">Placa *</label>
+        <input type="text" id="placa" name="placa" required placeholder="Ej: ABC123" maxlength="8">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="marca">Marca</label>
+          <select id="marca" name="marca">
+            <option value="">Seleccione marca</option>
+            <option>Toyota</option>
+            <option>Honda</option>
+            <option>Ford</option>
+            <option>Chevrolet</option>
+            <option>Nissan</option>
+            <option>Otro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="modelo">Modelo *</label>
+          <input type="text" id="modelo" name="modelo" required placeholder="Ej: Corolla, Civic">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="anio">Año</label>
+          <input type="number" id="anio" name="anio" min="1900" max="2099" placeholder="Ej: 2020">
+        </div>
+
+        <div class="form-group">
+          <label for="color">Color *</label>
+          <input type="text" id="color" name="color" required placeholder="Ej: Rojo, Azul">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="puertas">Puertas *</label>
+          <input type="number" id="puertas" name="puertas" required min="1" max="10" value="4">
+        </div>
+
+        <div class="form-group">
+          <label for="tipo">Tipo</label>
+          <select id="tipo" name="tipo">
+            <option value="">Seleccione tipo</option>
+            <option>Sedán</option>
+            <option>SUV</option>
+            <option>Pickup</option>
+            <option>Hatchback</option>
+            <option>Motocicleta</option>
+          </select>
+        </div>
+      </div>
+
+      <h2 style="margin-top: 30px;">Información del Propietario</h2>
+
+      <div class="form-group">
+        <label for="propietario">Nombre Completo</label>
+        <input type="text" id="propietario" name="propietario" placeholder="Nombre del propietario">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cedula">Cédula</label>
+          <input type="text" id="cedula" name="cedula" maxlength="15" placeholder="Número de cédula">
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="Número de contacto">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="observaciones">Observaciones</label>
+        <textarea id="observaciones" name="observaciones" rows="3" placeholder="Observaciones adicionales..."></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Registrar Vehículo</button>
+        <button type="reset" class="btn btn-secondary">Limpiar Formulario</button>
+      </div>
+    </form>
+
+    <div id="results" class="results">
+      <h2 id="resultTitle">✅ ¡Vehículo Registrado Exitosamente!</h2>
+      <div id="vehicleData" class="vehicle-card"></div>
+      <div style="display:flex; gap:10px;">
+        <button id="newBtn" onclick="resetForm()" class="btn btn-primary">Registrar Otro Vehículo</button>
+        <a href="/h2-console" class="btn btn-secondary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Ver H2 Console</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const apiBase = window.location.origin; // same origin
+
+    document.getElementById('vehicleForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const payload = {
+        placa: document.getElementById('placa').value.toUpperCase().trim(),
+        modelo: document.getElementById('modelo').value.trim(),
+        color: document.getElementById('color').value.trim(),
+        puertas: parseInt(document.getElementById('puertas').value, 10) || 0
+      };
+
+      // Basic validation
+      if (!payload.placa || !payload.modelo || !payload.color || !payload.puertas) {
+        alert('Por favor complete los campos obligatorios: placa, modelo, color y puertas.');
+        return;
+      }
+
+      try {
+        const res = await fetch(apiBase + '/vehiculos/agregar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error('Error del servidor: ' + res.status);
+
+        const data = await res.json();
+        showResultsFromServer(data);
+      } catch (err) {
+        console.error(err);
+        alert('Error al guardar el vehículo: ' + err.message);
+      }
+    });
+
+    function showResultsFromServer(data) {
+      const resultsDiv = document.getElementById('results');
+      const vehicleDataDiv = document.getElementById('vehicleData');
+      vehicleDataDiv.innerHTML = `
+        <div class="vehicle-info">
+          <div class="info-item"><span class="info-label">Placa:</span> ${data.placa || '-'} </div>
+          <div class="info-item"><span class="info-label">Modelo:</span> ${data.modelo || '-'} </div>
+          <div class="info-item"><span class="info-label">Color:</span> ${data.color || '-'} </div>
+          <div class="info-item"><span class="info-label">Puertas:</span> ${data.puertas || '-'} </div>
+        </div>
+      `;
+
+      document.getElementById('vehicleForm').style.display = 'none';
+      resultsDiv.style.display = 'block';
+      resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetForm() {
+      document.getElementById('vehicleForm').reset();
+      document.getElementById('vehicleForm').style.display = 'block';
+      document.getElementById('results').style.display = 'none';
+      document.getElementById('vehicleForm').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Small client-side sanitizations
+    document.getElementById('placa').addEventListener('input', function() { this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); });
+    try { document.getElementById('cedula').addEventListener('input', function() { this.value = this.value.replace(/\D/g, ''); }); } catch(e){}
+  </script>
+</body>
+</html>
