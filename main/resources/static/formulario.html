@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Vehículos</title>
+    <script>
+        function guardar(){
+            let data = {
+                placa: document.getElementById("placa").value,
+                modelo: document.getElementById("modelo").value,
+                color: document.getElementById("color").value,
+                puertas: document.getElementById("puertas").value
+            };
+
+            fetch("http://localhost:8080/vehiculos/agregar", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(data)
+            }).then(r => alert("Vehículo agregado correctamente"));
+        }
+
+        function modificar(){
+            let data = {
+                placa: document.getElementById("placa").value,
+                modelo: document.getElementById("modelo").value,
+                color: document.getElementById("color").value,
+                puertas: document.getElementById("puertas").value
+            };
+
+            fetch("http://localhost:8080/vehiculos/modificar", {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(data)
+            }).then(r => alert("Vehículo modificado correctamente"));
+        }
+    </script>
+</head>
+<body>
+    <h2>Formulario Vehículo</h2>
+
+    Placa: <input id="placa"><br><br>
+    Modelo: <input id="modelo"><br><br>
+    Color: <input id="color"><br><br>
+    Puertas: <input id="puertas" type="number"><br><br>
+
+    <button onclick="guardar()">Agregar</button>
+    <button onclick="modificar()">Modificar</button>
+</body>
+</html>
