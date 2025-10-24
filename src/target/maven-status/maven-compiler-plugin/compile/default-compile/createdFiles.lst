@@ -1,0 +1,4 @@
+com\miempresa\vehiculos\VehiculosAppApplication.class
+com\miempresa\vehiculos\repository\VehiculoRepository.class
+com\miempresa\vehiculos\controller\VehiculoController.class
+com\miempresa\vehiculos\model\Vehiculo.class
